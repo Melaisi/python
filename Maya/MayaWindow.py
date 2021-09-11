@@ -2,7 +2,7 @@
 The goal of this script to display a non funcitonal user interface with elements 
 to create turntable with multiple options.
 
-This file hosted in external directory to be called by a python script hosted in Maya->Script folder 
+This file hosted in external directory using userSetup.py  
 
 Resourcces:
    Practical Maya Programming with Python - Galanakis, Robert, 
@@ -18,3 +18,21 @@ Basic Required UI elements:
     7) Angle per frame Text Input field [Speed]
 '''
 
+# import Qt related module 
+from PySide2 import QtCore, QtGui, QtWidgets 
+Signal = QtCore.Signal
+
+def create_window():
+    win = QtWidgets.QMainWindow()
+    return win
+
+
+def display_window():
+    # From https://stackoverflow.com/a/63708668/11358872 
+    if not QtWidgets.QApplication.instance():
+        app = QtWidgets.QApplication(sys.argv)
+    else:
+        app = QtWidgets.QApplication.instance()
+    win = create_window()
+    win.show()
+    app.exec_()
