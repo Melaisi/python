@@ -22,17 +22,50 @@ Basic Required UI elements:
 from PySide2 import QtCore, QtGui, QtWidgets 
 Signal = QtCore.Signal
 
+# import sys, needed for QtWidgets.QApplication instance
+import sys
+
+class HelloWindow(QtWidgets.QMainWindow):
+    createClicked = Signal(str)
+
 def create_window():
-    win = QtWidgets.QMainWindow()
-    return win
+    window = HelloWindow()
+    window.setWindowTitle('Hello Maya')
 
+    container = QtWidgets.QWidget(window)
+    
+    label = QtWidgets.QLabel('Distance', container)
+    textbox = QtWidgets.QLineEdit(container)
 
-def display_window():
-    # From https://stackoverflow.com/a/63708668/11358872 
+    create_button = QtWidgets.QPushButton("Create",container)
+    cancel_button = QtWidgets.QPushButton("Cancel",container)
+
+    def onClick():
+        window.createClicked.emit(textbox.text())
+    create_button.clicked.connect(onClick)
+
+    layout = QtWidgets.QHBoxLayout(container)
+    container.setLayout(layout)
+    # Add widget to layout 
+    layout.addWidget(label)
+    layout.addWidget(textbox)
+    layout.addWidget(create_button)
+    layout.addWidget(cancel_button)
+    
+
+    window.setCentralWidget(container)
+
+    return window
+
+if __name__ == '__main__':
+    def oncreate(text):
+        print("Create Clicked, text is:",text)
+
     if not QtWidgets.QApplication.instance():
         app = QtWidgets.QApplication(sys.argv)
     else:
         app = QtWidgets.QApplication.instance()
     win = create_window()
+    win.createClicked.connect(oncreate)
     win.show()
-    app.exec_()
+    sys.exit(app.exec_())
