@@ -8,6 +8,13 @@ Resourcces:
    Practical Maya Programming with Python - Galanakis, Robert, 
     Chapter 5. Building Graphical User Interfaces for Maya
 
-
+Basic Required UI elements:
+    1) Create Button 
+    2) Cancel Button 
+    3) Distance Slider  
+    4) Distance Text Input field  
+    5) Height Slider
+    6) Height Text Input field 
+    7) Angle per frame Text Input field [Speed]
 '''
 
