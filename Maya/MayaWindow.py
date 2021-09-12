@@ -30,25 +30,41 @@ class HelloWindow(QtWidgets.QMainWindow):
 
 def create_window():
     window = HelloWindow()
-    window.setWindowTitle('Hello Maya')
+    window.setWindowTitle('Hello Qt Widgets')
 
     container = QtWidgets.QWidget(window)
     
-    label = QtWidgets.QLabel('Distance', container)
-    textbox = QtWidgets.QLineEdit(container)
+    # Distance (from object ? origin? )
+    
+    distance_label = QtWidgets.QLabel('Distance')
+    distance_input = QtWidgets.QLineEdit()
+    distance_slider = QtWidgets.QSlider(QtCore.Qt.Horizontal)
+
+    # Height ( current object Y + new height ? or from origin )
+
+    height_label = QtWidgets.QLabel('Height')
+    height_input = QtWidgets.QLineEdit()
+    height_slider = QtWidgets.QSlider(QtCore.Qt.Horizontal)
+
+    # Speed (Degrees per Frame)
+    speed_label = QtWidgets.QLabel("Degrees per frame")
+    speed_input = QtWidgets.QLineEdit()
+    speed_slider = QtWidgets.QSlider(QtCore.Qt.Horizontal)
+
+    # Frames ( How many frames ) ?
 
     create_button = QtWidgets.QPushButton("Create",container)
     cancel_button = QtWidgets.QPushButton("Cancel",container)
 
     def onClick():
-        window.createClicked.emit(textbox.text())
+        window.createClicked.emit("Crete Clicked")
     create_button.clicked.connect(onClick)
 
     layout = QtWidgets.QHBoxLayout(container)
     container.setLayout(layout)
     # Add widget to layout 
-    layout.addWidget(label)
-    layout.addWidget(textbox)
+    
+
     layout.addWidget(create_button)
     layout.addWidget(cancel_button)
     
