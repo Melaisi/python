@@ -6,10 +6,11 @@
     This script contain the GUI elements of turntable tool for Maya
 
 :description:
-  Containt multiple options that will be used by turntable logic to create 
+    Contains multiple options that will be used by turntable logic to create 
   a turntable camera render in Maya
 
-
+:todo:
+    Needs better validation. 
 '''
 import sys
 from PySide2 import QtCore, QtGui
@@ -43,9 +44,9 @@ def create_window(parent=None):
     main_layout = QVBoxLayout()
 
     # Sliders
-    distance = MySlider("Distance", SliderType.DOUBLE)
-    height = MySlider("Height", SliderType.DOUBLE)
-    degrees = MySlider("Degrees Per Frame", SliderType.DOUBLE)
+    distance = MySlider("Distance", SliderType.DOUBLE,0.001,10000)
+    height = MySlider("Height", SliderType.DOUBLE,-1000,+1000)
+    degrees = MySlider("Degrees Per Frame", SliderType.DOUBLE,0.001,360)
 
     # Buttons
     create_button = QPushButton("Create turntable")
@@ -74,7 +75,7 @@ class MySlider():
         '''Update both slider and input values to match '''
         print(value)
 
-    def __init__(self,label,type):
+    def __init__(self,label,type,min,max):
         self.layout = QHBoxLayout()
         self.label = QLabel(label)
         
@@ -88,11 +89,15 @@ class MySlider():
         else:
             self.validator = QtGui.QDoubleValidator()
 
+        self.validator.setRange(min,max)
         self.input_line.setValidator(self.validator)        
         
         self.slider = QSlider(QtCore.Qt.Horizontal)
+        self.slider.setRange(min,max)
 
         def update_slider(value):
+            if value == "-":
+                return
             self.slider.setValue(float(value))
             self.value = float(value)
         def update_input(value):
